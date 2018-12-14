@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+    <div class="container">
+        
+        <header class="jumbotron">
+            <div class="container">
+                <h1>Welcome To The Bachelors</h1>
+                <p>View our hand-picked Locations from all over the country!</p>
+                <p><a class="btn btn-primary btn-lg" href="/locations/new">Add New Location</a><p>
+            </div>
+        </header>
+        
+        <div class="row text-center" style="display:flex; flex-wrap:wrap">    
+            <% locations.forEach(function(location){ %>
+                <div class="col-md-3 col-sm-6">
+                    <div class="thumbnail">
+                        <image src="<%= location.image %>">
+                        <h4><%= location.name %></h4>
+                        <p>
+                            <a href="locations/<%= location.id %>" class="btn btn-primary">More Info</a>
+                        </p>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <div>
+            <a href="/">Go Back To The HomePage</a>
+        </div>
+    </div>
