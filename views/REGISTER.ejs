@@ -1,0 +1,58 @@
+<% include ./partials/header %>
+<section id="aa-signin">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="aa-signin-area">
+            <div class="aa-signin-form">
+              <div class="aa-signin-form-title">
+                <h2>Lets get you signed up!</h2>
+              </div>
+              <form class="contactform" action="/register" method="POST">                                                 
+                
+                <div class="aa-single-field">
+                  <label for="inputUsername">Username <span class="required">*</span></label>
+                  <input id="inputUsername" type="text" required="required" aria-required="true" value="" name="username" autofocus>
+                </div>
+                
+                <div class="aa-single-field">
+                  <label for="inputPassword">Password <span class="required">*</span></label>
+                  <input id="inputPassword" type="password" required="required" aria-required="true" value="" name="password">
+                </div>
+                
+                <div class="aa-single-field">
+                  <label for="inputFirstname">First Name <span class="required">*</span></label>
+                  <input id="inputFirstname" type="text" name="firstName"> 
+                </div>
+                
+                <div class="aa-single-field">
+                  <label for="inputLastname">Last Name <span class="required">*</span></label>
+                  <input id="inputLastname" type="text" name="lastName"> 
+                </div>
+                
+                <div class="aa-single-field">
+                  <label for="inputEmail">E-mail <span class="required">*</span></label>
+                  <input id="inputEmail" type="email" name="email"> 
+                </div>
+                
+                <div class="aa-single-field">
+                  <label for="inputPhone">Phone <span class="required">*</span></label>
+                  <input id="inputPhone" type="phone" name="number"> 
+                </div>
+                
+                <div class="aa-single-field">
+                  <label for="inputSecretCode">Secret Code </label>
+                  <input id="inputSecretCode" type="type" name="adminCode"> 
+                </div>
+                
+                <div class="aa-single-submit">
+                  <input type="submit" value="Create Account" name="submit">                    
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> 
+<% include ./partials/footer %>

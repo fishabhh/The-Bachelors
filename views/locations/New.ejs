@@ -1,27 +1,82 @@
 <% include ../partials/header %>
-<div class="container">
-    <div class="row">
-        <h1 style="text-align:center;">Create a New Location</h1>
-        <div style="width:30%; margin: 25px auto">
-            <form action="/locations" method="POST">
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Enter Name" name="name">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="number" placeholder="Enter Price" name="price" min="100" step="100">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Enter Img URL" name="image">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Enter Description" name="description">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-lg btn-block">Submit</button>
-                </div>            
-            </form>
-            <a href="/locations">Go Back</a>
-        </div>
+<div class="row justify-content-center">
+    <div class="col-md-12 text-center">
+        <h1>Create a New Location</h1>
+    </div>    
+    <div class="col-xs-12 col-md-6 col-lg-4">
+        <form action="/locations" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" class="form-control" name="location[category]">
+                    <option value="Private">Private</option>
+                    <option value="Shared">Shared</option>
+                    <option value="Home Stay">Home Stay</option>
+                    <option value="Flat">Flat</option>
+                    <option value="PG">PG</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select id="type" class="form-control" name="location[type]">
+                    <option value="1 BHK">1 BHK</option>
+                    <option value="2 BHK">2 BHK</option>
+                    <option value="3 BHK">3 BHK</option>
+                    <option value="4 BHK">4 BHK</option>
+                    <option value="Single Bed">Single Bed</option>
+                    <option value="Double Bed">Double Bed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bathroom">Bathroom(s)</label>
+                <select id="bathroom" class="form-control" name="location[bathroom]">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dimension">Dimension</label>
+                <input id="dimension" class="form-control" type="number" placeholder="Enter Dimension" name="location[dimension]">
+            </div>
+            <div class="form-group">
+                <label for="locality">Locality</label>
+                <input id="locality" class="form-control" type="text" placeholder="Enter Locality" name="location[locality]">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input id="address" class="form-control" type="text" placeholder="Enter Address" name="location[address]">
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input id="city" class="form-control" type="text" placeholder="Enter City" name="location[city]">
+            </div>
+            <div class="form-group">
+                <label for="pinCode">Pincode</label>
+                <input id="pinCode" class="form-control" type="number" placeholder="Enter Pincode" name="location[pinCode]">
+            </div>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input id="title" class="form-control" type="text" placeholder="Enter Title" name="location[title]">
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input id="price" class="form-control" type="number" placeholder="Enter Price" name="location[price]" min="100" step="100">
+            </div>
+            <div class="form-group">
+                <label for="image">Image : 1</label>
+                <input id="image" class="form-control" type="file" accept="image/*" name="image" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input id="description" class="form-control" type="text" placeholder="Enter Description" name="location[description]">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-lg btn-block">Submit</button>
+            </div>            
+        </form>
+        <a href="/locations">Go Back</a>
     </div>
 </div>
 <% include ../partials/footer %>

@@ -1,0 +1,205 @@
+<% include ../partials/HEADER %>
+  <section id="aa-property-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="aa-property-header-inner">
+            <h2>Properties Page</h2>
+            <ol class="breadcrumb">
+            <li><a href="/">HOME</a></li>            
+            <li class="active">PROPERTIES</li>
+          </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> 
+  <!-- End Proerty header  -->
+  
+<!-- Start Properties  -->
+  <section id="aa-properties">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="aa-properties-content">
+            <!-- start properties content head -->
+            <div class="aa-properties-content-head">              
+              <div class="aa-properties-content-head-left">
+                <form action="" class="aa-sort-form">
+                  <label for="">Sort by</label>
+                  <select name="">
+                    <option value="1" selected="Default">Default</option>
+                    <option value="2">Name</option>
+                    <option value="3">Price</option>
+                    <option value="4">Date</option>
+                  </select>
+                </form>
+                <form action="" class="aa-show-form">
+                  <label for="">Show</label>
+                  <select name="">
+                    <option value="1" selected="12">6</option>
+                    <option value="2">12</option>
+                    <option value="3">24</option>
+                  </select>
+                </form>
+              </div>
+              <div class="aa-properties-content-head-right">
+                <a id="aa-grid-properties" href="#"><span class="fa fa-th"></span></a>
+                <a id="aa-list-properties" href="#"><span class="fa fa-list"></span></a>
+              </div>            
+            </div>  
+            <div class="aa-properties-content-body">
+              <ul class="aa-properties-nav">
+                <% locations.forEach(function(location){ %>
+                <li>
+                  <article class="aa-properties-item">
+                    <a class="aa-properties-item-img" href="/locations/<%= location._id %>">
+                      <img alt="img" src="<%= location.image %>">
+                    </a>
+                    <div class="aa-tag for-rent">
+                      For Rent
+                    </div>
+                    <div class="aa-properties-item-content">
+                      <div class="aa-properties-info">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <span><%= location.category %></span>
+                          </div>
+                          <div class="col-md-4">
+                            <span><%= location.type %></span>
+                          </div>
+                          <div class="col-md-4">
+                          <span>
+                          <% if (location.locality.length>10) {%>
+                          <%= location.locality.substring(0,10) %>...
+                          <% } else {%>
+                          <%= location.locality %>
+                          <% } %>
+                          </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="aa-properties-about">
+                        <h4><a href="/locations/<%= location._id %>">
+                          <% if (location.title.length>35) {%>
+                          <%= location.title.substring(0,35) %>...
+                          <% } else {%>
+                          <%= location.title %>
+                          <% } %>
+                        </a></h4>
+                        <p><%- location.description.substring(0,100) %>...</p>                      
+                      </div>
+                      <div class="aa-properties-detial">
+                        <span class="aa-price">
+                          ₹ <%= location.price %>/month
+                        </span>
+                        <a href="/locations/<%= location._id %>" class="aa-secondary-btn">View Details</a>
+                      </div>
+                    </div>
+                  </article>
+                  </li>
+              <% }); %>    
+              </ul>
+            </div>
+            <div class="aa-properties-content-bottom">
+              <nav>
+                <% if (pages && pages > 0) { %>
+                <ul class="pagination">
+                  <% if (current == 1) { %>
+                    <li class="disabled"><a>First</a></li>
+                  <% } else { %>
+                  <li><a href="/locations">First</a></li>
+                  <% } %>
+           
+                  <% if (current == 1) { %>
+                  <li class="disabled"><a>«</a></li>
+                  <% } else { %>
+                  <li><a href="/locations?page=<%= Number(current) - 1 %>">«</a></li>
+                  <% } %>
+           
+                  <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                  <% if (i !== 1) { %>
+                  <li class="disabled"><a>...</a></li>
+                  <% } %>
+                  <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                  <% if (i == current) { %>
+                  <li class="active"><a><%= i %></a></li>
+                  <% } else { %>
+                  <li><a href="/locations?page=<%= i %>"><%= i %></a></li>
+                  <% } %>
+                  <% if (i == Number(current) + 4 && i < pages) { %>
+                  <li class="disabled"><a>...</a></li>
+                  <% } %>
+                  <% } %>
+           
+                  <% if (current == pages) { %>
+                  <li class="disabled"><a>»</a></li>
+                  <% } else { %>
+                  <li><a href="/locations?page=<%= Number(current) + 1 %>">»</a></li>
+                  <% } %>
+           
+                  <% if (current == pages) { %>
+                  <li class="disabled"><a>Last</a></li>
+                  <% } else { %>
+                  <li><a href="/locations?page=<%= pages %>">Last</a></li>
+                  <% } %>
+                </ul>
+                <% } %>
+              </nav>
+            </div>
+        </div>
+      </div>
+              <!-- Start properties sidebar -->
+        <div class="col-md-4">
+          <aside class="aa-properties-sidebar">
+            <!-- Start Single properties sidebar -->
+            <div class="aa-properties-single-sidebar">
+              <h3>Properties Search</h3>
+              <form action="/locations" method="GET" class="form-group">
+                <div class="aa-single-advance-search">
+                  <input type="text" name="locality" placeholder="Type Your Location" class="form-control">
+                </div>
+                <div class="aa-single-advance-search">
+                  <select name="category">
+                    <option value="All">All</option>
+                    <option value="Private">Private</option>
+                    <option value="Shared">Shared</option>
+                    <option value="Home Stay">Home Stay</option>
+                    <option value="Flat">Flat</option>
+                    <option value="PG">PG</option>
+                </select>
+                </div>
+                <div class="aa-single-advance-search">
+                  <select name="type">
+                    <option value="All">All</option>
+                    <option value="1 BHK">1 BHK</option>
+                    <option value="2 BHK">2 BHK</option>
+                    <option value="3 BHK">3 BHK</option>
+                    <option value="4 BHK">4 BHK</option>
+                    <option value="Single Bed">Single Bed</option>
+                    <option value="Double Bed">Double Bed</option>
+                  </select>
+                </div>
+                <div class="aa-single-advance-search">
+                  <input type="submit" value="Search" class="aa-search-btn">
+                </div>
+              </form>
+            </div> 
+      <!-- Start Single properties sidebar -->
+            <div class="aa-properties-single-sidebar">
+              <h3 style="text-align:center">Interested?</h3>
+              <h4 style="text-align:center">Hit us on the phone!</h4>
+              <h4 class="media-heading" style="text-align:center"><i class="fas fa-mobile"></i> : +91-99XXXXXX99</h4>
+              <hr style="border-top:1px solid grey">
+              <h4 style="text-align:center">Drop us a mail!</h4>
+              <h4 class="media-heading"style="text-align:center"><i class="fas fa-at"></i> : test@gmail.com</h4>
+              <% if(currentUser && currentUser.isAdmin){ %>
+              <a class="btn btn-primary btn-lg " href="/locations/new" style="width:100%;margin-top:20px">Add New Location</a>
+              <% } %>            
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+<% include ../partials/FOOTER %>

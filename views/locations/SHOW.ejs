@@ -1,0 +1,186 @@
+<% include ../partials/HEADER %>
+    <section id="aa-property-header">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="aa-property-header-inner">
+                <h2>Properties Details</h2>
+                <ol class="breadcrumb">
+                <li><a href="/">HOME</a></li>            
+                <li class="active"><%= location.title %></li>
+              </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> 
+      <!-- End Proerty header  -->
+    
+      <!-- Start Properties  -->
+      <section id="aa-properties">
+        <div class="container">
+          
+          <div class="row">
+            <div class="col-md-8">
+              <div class="aa-properties-content">            
+                <!-- Start properties content body -->
+                <div class="aa-properties-details">
+                 <div class="aa-properties-details-img">
+                   <img src="<%= location.image %>" alt="img">
+                   <img src="<%= location.image %>" alt="img">
+                   <img src="<%= location.image %>" alt="img">
+                   <img src="<%= location.image %>" alt="img">
+                 </div>
+                 <!--Property Details-->
+                 <div class="jumbotron">
+                 <div class="aa-properties-info">
+                   <h2><%= location.title %></h2>
+                   <hr style="border-top:1px solid grey">
+                   <h4><i class="fas fa-map-marker-alt"></i> <%= location.address %></h4>
+                   <span class="aa-price" style="font-size:1em;margin-bottom:3px">₹ <%= location.price %>/month</span>
+                   <hr style="border-top:1px solid grey">
+                   <h4><strong>Property Description</strong></h4>
+                   <p style="font-size:1em"><%= location.description %>.</p>
+                   <h4><strong>Propery Features</strong></h4>
+                   <ul>
+                     <li><i class="fas fa-check-square"></i> <%= location.category %></li>
+                     <li><i class="fas fa-check-square"></i> <%= location.type %></li>
+                     <li><i class="fas fa-check-square"></i> <%= location.bathroom %> Bath(s)</li>
+                     <li><i class="fas fa-check-square"></i> <%= location.dimension %> sq. ft</li>
+                     <li><i class="fas fa-check-square"></i> Security</li>
+                     <li><i class="fas fa-check-square"></i> Maid</li>
+                     <li><i class="fas fa-check-square"></i> Cook</li>
+                     <li><i class="fas fa-check-square"></i> Movers and Packers</li>
+                   </ul>
+                   <hr style="border-top:1px solid grey">
+                    <% if (location.rating === 0) { %>
+                    <h5>
+                        <em>No reviews yet.</em>
+                    </h5>
+                    <% } else { %>
+                    <p style="font-size:1.5em">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star <% if (location.rating > 1.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (location.rating > 2.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (location.rating > 3.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (location.rating > 4.5) { %> checked <% } %>"></span>
+                        <em>(total reviews: <%= location.reviews.length %>)</em>
+                    </p>
+                    <p style="font-size:1.25em">
+                        Current location rating: <strong><%= location.rating.toFixed(2) %></strong>
+                    </p>
+                    <p><h4><strong>Latest reviews for this location:</strong></h4></p>
+                    <hr style="margin-top: 0;">
+                    <% location.reviews.slice(0, 5).forEach(function(review){ %>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %><%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
+                            <div>Review by: <strong><%= review.author.username %></strong></div>
+                            <span><em><%= review.updatedAt.toDateString() %></em></span>
+                        </div>
+                        <div class="col-md-9">
+                            <p style="text-align: justify; word-wrap: break-word;">
+                                <%= review.text %>
+                            </p>
+                            <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+                            <a class="btn btn-xs btn-warning"
+                               href="/locations/<%=location._id %>/reviews/<%=review._id %>/edit">Edit</a>
+                            <form id="delete-form" action="/locations/<%=location._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+                                <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                            </form>
+                            <% } %>
+                        </div>
+                    </div>
+                    <hr>
+                    <% }); %>
+                    <div style="margin-bottom: 10px;">
+                        <h4><a href="/locations/<%= location._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> See all reviews</a></h4>
+                    </div>
+                    <% } %>
+                    <div>
+                        <a class="btn btn-primary btn-lg <% if (currentUser && location.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/locations/<%= location._id %>/reviews/new">
+                            Write a New Review</a>
+                    </div>
+                  </div>
+                  <div class="container">
+                   <div class="row">
+                      <div class="col-md-6">
+                        <% if(currentUser && location.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                        <a href="/locations/<%=location._id%>/edit" class="btn btn-warning" style="width:100%">Edit</a>
+                      </div>
+                      <div class="col-md-6">
+                        <form class="delete-form" action="/locations/<%=location._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger" style="width:100%">Delete</button>
+                        </form>
+                      </div>  
+                    <% } %>
+                 </div>
+                </div> 
+                 <p style="font-size:13px;float:right"><em>Submitted by: <%= location.author.username %>, <%= moment(location.createdAt).fromNow() %></em></p>
+                </div>
+              <!-- Properties social share -->
+                 <div class="aa-properties-social">
+                   <ul>
+                     <li>Share</li>
+                     <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                     <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+                     <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                   </ul>
+                 </div>
+              </div>
+            </div>
+            </div>
+        </div>    
+          <!--</div>-->
+          
+          <!--<div class="row">-->
+              <!-- Start properties sidebar -->
+            <div class="col-md-4">
+              <aside class="aa-properties-sidebar">
+                <!-- Start Single properties sidebar -->
+                <div class="aa-properties-single-sidebar">
+                  <h3>Properties Search</h3>
+                  <form action="/locations" method="GET" class="form-group">
+                    <div class="aa-single-advance-search">
+                      <input type="text" name="locality" placeholder="Type Your Location" class="form-control">
+                    </div>
+                    <div class="aa-single-advance-search">
+                        <select name="category">
+                            <option value="Private">Private</option>
+                            <option value="Shared">Shared</option>
+                            <option value="FullHouse">Full House</option>
+                            <option value="Flat">Flat</option>
+                            <option value="PG">PG</option>
+                        </select>
+                    </div>
+                    <div class="aa-single-advance-search">
+                        <select name="type">
+                            <option value="1 BHK">1 BHK</option>
+                            <option value="2 BHK">2 BHK</option>
+                            <option value="3 BHK">3 BHK</option>
+                            <option value="4 BHK">4 BHK</option>
+                            <option value="Single Bed">Single Bed</option>
+                            <option value="Double Bed">Double Bed</option>
+                        </select>
+                    </div>
+                  <div class="aa-single-advance-search">
+                    <input type="submit" value="Search" class="aa-search-btn">
+                  </div>
+                </form>
+              </div> 
+            <!-- Start Single properties sidebar -->
+            <div class="aa-properties-single-sidebar">
+              <h3 style="text-align:center">Interested?</h3>
+              <h4 style="text-align:center">Hit us on the phone!</h4>
+              <h4 class="media-heading" style="text-align:center"><i class="fas fa-mobile"></i> : +91-99XXXXXX99</h4>
+              <hr style="border-top:1px solid grey">
+              <h4 style="text-align:center">Want to mail us?</h4>
+              <h4 class="media-heading"style="text-align:center"><i class="fas fa-at"></i> : test@gmail.com</h4>
+            </div>
+          </aside>
+        </div>
+          </div>
+          
+        </div>
+      </section>
+<% include ../partials/FOOTER %>      

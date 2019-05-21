@@ -1,59 +1,75 @@
 <% include ../partials/header %>
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <p class="lead">The Bachelors</p>
-            <div class="list-group">
-                <li class="list-group-item active">info1</li>
-                <li class="list-group-item">       info2</li>
-                <li class="list-group-item">       info3</li>
+<div class="row">
+    <div class="col-md-3">
+        <div id='map' style='width:100%; height:400px'></div>
+    </div>
+    <div class="col-md-9">
+        <div class="card mb-3">
+            <img class="card-img-top" src="<%= location.image %>" alt="<%= location.name %>">
+            <div class="card-body">
+                <p class="float-right">    
+                    <%= location.price%>/month
+                </p>
+                <h5 class="card-title"><%= location.name %></h5>
+                <p>
+                    <em>Submitted by: <%= location.author.username %>, <%= moment(location.createdAt).fromNow() %></em>
+                </p> 
+                <hr>
+                <p class="card-text"><%= location.description %></p>
+                <% if(currentUser && location.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                <a href="/locations/<%=location._id%>/edit" class="btn btn-warning">Edit</a>
+                <form class="delete-form" action="/locations/<%=location._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger pull-right">Delete</button>
+                </form>
+                <% } %>
             </div>
         </div>
-        <div class="col-md-9">
-            <div class="thumbnail">
-                <img class="img-responsive" src="<%=location.image %>">
-                <div class="caption-full">
-                    <h4 class="pull-right"><%= location.price%>/month</h4>
-                    <h4><a href="/locations/<%= location._id %>"><%= location.name %></a></h4>
-                    <p><%= location.description %></p>
-                    <p>
-                        <em>Submitted By <%= location.author.username %></em>
-                    </p>
-                    <% if(currentUser && location.author.id.equals(currentUser._id)){ %>
-                        <a href="/locations/<%=location._id%>/edit" class="btn btn-warning btn-xs">Edit</a>
-                        <form class="delete-form" action="/locations/<%=location._id%>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger btn-xs pull-right">Delete</button>
-                    </form>
-                    <% } %>
-                </div>
-            </div>
-            <div class="well">
+        <div class="card">
+            <div class="card-body">
                 <div class="text-right">
-                        <a href="/locations/<%=location._id %>/comments/new" class="btn btn-success">Add new Comment</a>
+                    <a href="/locations/<%=location._id %>/comments/new" class="btn btn-success">Add new Comment</a>
                 </div>
                 <hr>
+                <div class="row">
                 <% location.comments.forEach(function(comment){ %>
                 <div class="row">
-                    <div class="col-md-12">
-                        <strong><%= comment.author.username %></strong>
-                        <span class="pull-right">10 days ago</span>
-                         <p>
-                            <%= comment.text %>
-                        </p>
-                        <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                        <a class="btn btn-xs btn-warning" 
-                        href="/locations/<%= location._id%>/comments/<%= comment._id%>/edit">
-                            Edit
-                        </a>
-                        <form class="delete-form" action="/locations/<%= location._id%>/comments/<%= comment._id%>?_method=DELETE" method="POST">
-                            <input type="submit" value="Delete" class="btn btn-xs btn-danger pull-right">
-                        </form>
-                        <% } %>
+                    <div class="col-md-12 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-left">
+                                    <p class="card-title"><%= comment.author.username %></p>
+                                    <p class="card-text"><%= comment.text %></p>
+                                </div>
+                                <div class="float-right">
+                                    <p><%= moment(comment.createdAt).fromNow() %></p>
+                                    <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                    <div class="float-right">
+                                        <a href="/locations/<%=location._id%>/comments/<%=comment._id%>/edit" class="btn btn-sm btn-warning">EDIT</a>                
+                                        <form class="delete-form" action="/locations/<%=location._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                            <button class="btn btn-sm btn-danger">DELETE</button>
+                                        </form>
+                                    </div>    
+                                    <% } %>    
+                                </div>        
+                            </div>            
+                        </div>
                     </div>
-                </div>
-                <% }) %>
+                <% }) %>    
             </div>
         </div>
+        </div>
+        </div>
     </div>
-</div>        
+</div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiZmlzaGFiaGgiLCJhIjoiY2pwb2EzbWJwMDBxaTQyczNqamcxcTFzdSJ9.qUiskXxeCLQgqJQvY7eTbg';
+  var lat=<%=location.lat%>;
+  var lng=<%=location.lng%>;
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v10',
+    center:[lat,lng],
+    zoom: 13,
+  });
+</script>
 <% include ../partials/footer %>

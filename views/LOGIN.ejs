@@ -1,0 +1,35 @@
+<% include ./partials/HEADER %>
+<section id="aa-signin">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="aa-signin-area">
+            <div class="aa-signin-form">
+              <div class="aa-signin-form-title">
+                <h2>LOGIN</h2>
+              </div>
+              
+              <form class="contactform" action="/login" method="POST">                                                 
+                <div class="aa-single-field">
+                  <label for="inputUsername">Username <span class="required">*</span></label>
+                  <input id="inputUsername" type="text" required="required" aria-required="true" value="" name="username" autofocus>
+                </div>
+                <div class="aa-single-field">
+                  <label for="inputPassword">Password <span class="required">*</span></label>
+                  <input id="inputPassword" type="password" name="password"> 
+                </div>
+                <div class="aa-single-submit">
+                  <input type="submit" value="LOGIN" class="aa-browse-btn" name="submit">
+                  <p>Trouble Logging In? <a href="/forgot">Reset Password!</a></p>
+                  <p>Don't Have A Account Yet? <a href="/register">CREATE NOW!</a></p>
+                </div>
+              </form>
+              <button><a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>Login Facebook</a></button>
+              <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<% include ./partials/FOOTER %>

@@ -1,0 +1,18 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h1><%=user.firstName +" "+ user.lastName%></h1>
+            <h3>Email: <%=user.email%></h3>
+            <h3>Contact: <%=user.phone%></h3>
+        </div>
+        <div class="col-md-8">
+            <ul>
+                <% locations.forEach(function(location){ %>
+                    <li><a href="/locations/<%=location.id%>"><%=location.name%></a></li>
+                <% }); %>
+            </ul>
+    </div>    
+</div>        
+<% include ../partials/footer %>

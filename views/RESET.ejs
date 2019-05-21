@@ -1,0 +1,31 @@
+<% include ./partials/header %>
+<section id="aa-signin">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="aa-signin-area">
+            <div class="aa-signin-form">
+              <div class="aa-signin-form-title">
+                <h2>New Password</h2>
+              </div>
+              <form class="contactform" action="/reset/<%= token %>" method="POST">
+                <div class="aa-single-field">
+                  <label for="password">New Password <span class="required">*</span></label>
+                  <input id="password" type="password" value="" required="required" placeholder="New Password" aria-required="true" name="password" autofocus>
+                </div>
+                <div class="aa-single-field">
+                  <label for="confirm">Confirm Password <span class="required">*</span></label>
+                  <input id="confirm" type="password" value="" required="required" placeholder="Confirm Password" aria-required="true" name="confirm" autofocus>
+                </div>
+                <div class="aa-single-submit">
+                  <input type="submit" value="Reset Password" class="aa-browse-btn" name="submit">  
+                  <p>Don't Have A Account Yet? <a href="/REGISTER">CREATE NOW!</a></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<% include ./partials/footer %>
